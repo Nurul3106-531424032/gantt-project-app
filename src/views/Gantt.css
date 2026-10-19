@@ -1,0 +1,327 @@
+/* Gantt Chart — layout: [label sticky 240px][track hari] dalam wadah scroll. */
+
+.gantt-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.gantt-scroll {
+  --lw: 240px;
+  position: relative;
+  overflow: auto;
+  max-height: 68vh;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+}
+
+/* ── Header (bulan + hari), sticky atas ── */
+.gantt-head {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  background: var(--bg);
+  min-width: 100%;
+}
+
+.gantt-corner {
+  position: sticky;
+  left: 0;
+  z-index: 6;
+  width: var(--lw);
+  flex: 0 0 auto;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+}
+
+.corner-months {
+  height: 26px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border);
+}
+
+.corner-days {
+  height: 34px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.gantt-months {
+  display: flex;
+  height: 26px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border);
+}
+
+.gantt-month {
+  box-sizing: border-box;
+  border-right: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.gantt-days {
+  display: flex;
+  height: 34px;
+}
+
+.gantt-day {
+  box-sizing: border-box;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  line-height: 1.05;
+  font-size: 10px;
+  color: var(--text);
+  flex: 0 0 auto;
+  user-select: none;
+}
+
+.gantt-day .d-num {
+  color: var(--text-h);
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.gantt-day.off {
+  background: var(--code-bg);
+}
+
+.gantt-day.off .d-num {
+  color: var(--text);
+}
+
+.gantt-day.today {
+  background: var(--accent-bg);
+}
+
+.gantt-day.today .d-num {
+  color: var(--accent);
+}
+
+/* ── Body ── */
+.gantt-body {
+  position: relative;
+}
+
+.gantt-stripe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--code-bg);
+  opacity: 0.75;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.gantt-today {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #f59e0b;
+  z-index: 4;
+  pointer-events: none;
+}
+
+.gantt-row {
+  display: flex;
+  width: max-content;
+  min-width: 100%;
+  height: 38px;
+  border-bottom: 1px solid var(--border);
+}
+
+.gantt-row.group {
+  height: 30px;
+  background: var(--code-bg);
+}
+
+.gantt-label {
+  position: sticky;
+  left: 0;
+  z-index: 3;
+  width: var(--lw);
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  font-size: 13px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.gantt-row.group .gantt-label {
+  background: var(--code-bg);
+  font-weight: 600;
+}
+
+.gantt-group-name,
+.gantt-task-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gantt-label .indent {
+  color: var(--text);
+  flex-shrink: 0;
+}
+
+.gantt-track {
+  position: relative;
+  height: 100%;
+  flex: 0 0 auto;
+}
+
+/* ── Bar ── */
+.gantt-bar {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  border-radius: 6px;
+  z-index: 2;
+  cursor: grab;
+  overflow: hidden;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18);
+}
+
+.gantt-bar:active {
+  cursor: grabbing;
+}
+
+.gantt-bar.critical {
+  outline: 2px solid #ef4444;
+  outline-offset: 1px;
+}
+
+.gantt-bar-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+}
+
+.gantt-bar-name {
+  position: relative;
+  z-index: 1;
+  font-size: 11px;
+  color: #fff;
+  padding: 0 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+/* ── Grip ubah durasi ── */
+.grip {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 8px;
+  cursor: ew-resize;
+  touch-action: none;
+  z-index: 2;
+}
+
+.grip-l {
+  left: 0;
+}
+
+.grip-r {
+  right: 0;
+}
+
+.grip::after {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 55%;
+  margin: 22% auto 0;
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 1px;
+}
+
+.grip:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ── Panah dependensi ── */
+.gantt-svg {
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Kontrol & legenda ── */
+.zoom-controls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zoom-label {
+  font-size: 12px;
+  color: var(--text);
+}
+
+.gantt-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text);
+}
+
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-crit {
+  width: 14px;
+  height: 10px;
+  border: 2px solid #ef4444;
+  border-radius: 3px;
+}
+
+.legend-off {
+  width: 14px;
+  height: 10px;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+}
+
+.legend-today {
+  width: 2px;
+  height: 14px;
+  background: #f59e0b;
+}
