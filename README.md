@@ -1,3 +1,15 @@
+# Tampilan Aplikasi
+
+### Beranda
+<img width="959" height="500" alt="Screenshot 2026-10-25 130112" src="https://github.com/user-attachments/assets/c431b96b-d4c9-4780-8601-5e3be2860985" />
+
+### Gantt Chart
+<img width="953" height="506" alt="Screenshot 2026-10-25 130200" src="https://github.com/user-attachments/assets/28a621b6-2434-4a3a-9bbe-fd0ab4acc2ca" />
+
+### Pert & Kritis
+<img width="958" height="505" alt="Screenshot 2026-10-25 130214" src="https://github.com/user-attachments/assets/a6a52fd4-4595-43db-846c-d62f54554ea1" />
+
+
 # OrgaPlan
 
 **Sistem Manajemen Jadwal dan Kegiatan Organisasi Mahasiswa**
